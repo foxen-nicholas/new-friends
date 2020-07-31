@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import FriendCard from './FriendCard';
 
-
-// import LikeProfile from './content/components/LikeProfile'
-
-
 const Request = (props) => {
-
 
     let [friendRequests, setFriendRequests] = useState([])
 
@@ -50,7 +45,6 @@ const Request = (props) => {
     //    set faves (newFaves)
 
     // }
-
 
     return (
         <div>

@@ -15,9 +15,9 @@ const Category = require("../../models/Category")
 router.get("/", function (req, res) {
     User.find(
         {},
-    ).then( results => {
+    ).then(results => {
         res.json(results)
-    }).catch(err => console.log(err))   
+    }).catch(err => console.log(err))
 })
 // GET friends test route
 // router.get("/friends", function (req, res) {
@@ -53,13 +53,13 @@ router.put('/profile/edit', function (req, res) {
     console.log("inside edit body route", req.body)
     const update = {
         "$set": {
-          "age": req.body.age,
-          "location": req.body.location,
-          "languages": req.body.languages,
-          "drink": req.body.drink,
-          "smoke": req.body.smoke,
-          "about": req.body.about,
-          "category": req.body.category
+            "age": req.body.age,
+            "location": req.body.location,
+            "languages": req.body.languages,
+            "drink": req.body.drink,
+            "smoke": req.body.smoke,
+            "about": req.body.about,
+            "category": req.body.category
         }
       }; 
     User.findByIdAndUpdate({'_id': req.body.id}, update, function (err, result) {
@@ -68,7 +68,7 @@ router.put('/profile/edit', function (req, res) {
         } else {
             res.send(result)
         }
-    }) 
+    })
 })
 router.post("/register", function (req, res) {
     User.findOne({ email: req.body.email }).then(user => {
@@ -88,7 +88,7 @@ router.post("/register", function (req, res) {
             })
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
-                    if (err) { 
+                    if (err) {
                         throw err
                     }
                     newUser.password = hash
@@ -154,7 +154,7 @@ router.post('/friendrequest', function (req, res) {
 // })
 //test categories
 router.get("/test/categories", function (req, res) {
-    res.json({ msg: "categories is working"})
+    res.json({ msg: "categories is working" })
 })
 router.post("/test/categories", function (req, res) {
     const newCategory = new Category({
@@ -202,5 +202,64 @@ router.get("/test/profile", function (req, res) {
     })
 })
 var mongo = require('mongodb');
+
+
+router.get("/friendRequests", passport.authenticate("jwt", { session: false }), (req, res) => {
+
+    console.log("inside profile route", req.user) 
+
+    User.findOne({'_id': req.user.id}, function(err, foundUser) {
+        if (err) {
+            console.log("We've got an error finding this user", err)
+        } else {
+            User.getPendingFriends(foundUser, function(err, friendships) {
+                console.log(friendships)
+                res.json(friendships)
+                
+            })
+            // User.getFriends(foundUser, function(err, friendships) {
+            //     console.log(friendships)
+            //     res.json(friendships)
+            // })
+        }
+    })
+    // .then( results => {
+    //     console.log("These are the RESULTS!!!", results)
+    //     res.json(results)
+
+    //     // User.findById(req.params.userId, function(err, foundUser) {
+    //     //     if (err) {
+    //     //         console.log(err)
+    //     //     } else {
+    //     //         User.getFriends(foundUser, function (err, friendships) {
+    //     //             if (err) {
+    //     //                 console.log(err)
+    //     //             } else {
+    //     //                 res.json(friendships)
+    //     //             }
+    //     //         })
+    //     //     }
+        
+
+    // }).catch( err => {
+    //     console.log(err)
+    // }) 
+    
+});
+
+// test route for specific user 
+router.get("/test/profile", function (req, res) {
+    User.findOne({'_id': req.user._id})
+    .then( results => {
+        res.json(results)
+        console.log('It worked!')
+    }).catch( err => {
+        console.log(err)
+    })
+})
+var mongo = require('mongodb');
+var o_id = new mongo.ObjectId("5f1f5928ee86e14d2a83d3cc");
+
+
 
 module.exports = router 

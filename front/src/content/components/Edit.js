@@ -11,7 +11,6 @@ const Edit = (props) => {
   let [drink, setDrink] = useState('')
   let [category, setCategory] = useState('')
   let [redirect, setRedirect] = useState(false)
-  
 
   let handleLanguages = (e) => {
     setLanguages(e.target.value)
@@ -35,28 +34,25 @@ const Edit = (props) => {
     setCategory(e.target.value)
   }
 
-
   let handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Edit.js Submit Button:", props.user)
-      const User = {
-        languages: languages,
-        age: age,
-        drink: drink,
-        smoke: smoke,
-        location: location,
-        about: about,
-        category: category,
-        id: props.user.id 
-      } 
-
-  axios.put(`${process.env.REACT_APP_API}/api/users/profile/edit`, User)
-        // .then(res => console.log(res.data))
-    .then(res => {
-      setRedirect(true)
-    })
-      .catch(err => console.log(err));
+    const User = {
+      languages: languages,
+      age: age,
+      drink: drink,
+      smoke: smoke,
+      location: location,
+      about: about,
+      category: category,
+      id: props.user.id
     }
+
+    axios.put(`${process.env.REACT_APP_API}/api/users/profile/edit`, User)
+      .then(res => {
+        setRedirect(true)
+      })
+      .catch(err => console.log(err));
+  }
 
   if (redirect) return <Redirect to="/Profile" />
 
@@ -65,7 +61,7 @@ const Edit = (props) => {
       <div className="col-md-7 offset-md-3">
         <div className="card card-body">
           <h2 className="py-2">Edit Profile</h2>
-          <form action="/profile" method="post"  onSubmit={handleSubmit} >
+          <form action="/profile" method="post" onSubmit={handleSubmit} >
             <div className="form-group">
               <label htmlFor="location">Location</label>
               <input type="text" name="location" value={location} onChange={handleLocation} className="form-control" />

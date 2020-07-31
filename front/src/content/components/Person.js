@@ -1,14 +1,13 @@
 import React from 'react';
-import Actions from './Actions';
 
 const Person = ({ person, modifySuperficialChoices }) => {
-  const { name, desc, age, image } = person;
+  const { name, desc, age, avatar } = person;
 
   return (
     <>
       <div className="person">
         <div className="person-photo">
-          <img src={`/images/users/${image}`} alt={name} />
+        // gravtar goes here
         </div>
 
         <div className="person-description">
@@ -18,11 +17,6 @@ const Person = ({ person, modifySuperficialChoices }) => {
           <p className="person-info">{desc}</p>
         </div>
       </div>
-
-      <Actions
-        person={person}
-        modifySuperficialChoices={modifySuperficialChoices}
-      />
     </>
   );
 };

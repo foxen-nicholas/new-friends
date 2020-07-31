@@ -35,51 +35,50 @@ const Signup = () => {
         password: password,
       }
 
-  axios.post(`${process.env.REACT_APP_API}/api/users/register`, newUser)
-        // .then(res => console.log(res.data))
-    .then(res => {
-      setRedirect(true)
-    })
-      .catch(err => console.log(err));
+      axios.post(`${process.env.REACT_APP_API}/api/users/register`, newUser)
+        .then(res => {
+          setRedirect(true)
+        })
+        .catch(err => console.log(err));
     }
   }
 
   if (redirect) return <Redirect to="/login" />
 
 
-    return (
+  return (
     <div className="signupSigninBackground">
-    <div id="form">
-      <div className="row mt-4">
-        <div className="col-md-7 offset-md-3">
-          <div className="card card-body">
+      <div id="form">
+        <div className="row mt-4">
+          <div className="col-md-7 offset-md-3">
+            <div className="card card-body">
               <p>Welcome to New Friends. Sign up to make new friends today. </p>
-            <h2 className="py-2">Signup</h2>
-            <form className="form" action="/ideas" method="post" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input type="text" name="name" value={name} onChange={handleName} className="form-control" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input type="email" name="email" value={email} onChange={handleEmail} className="form-control" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input type="password" name="password" value={password} onChange={handlePassword} className="form-control" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password2">Confirm Password</label>
-                <input type="password" name="password2" value={password2} onChange={handlePassword2} className="form-control" />
-              </div>
-              <button type="submit" className="btn btn-primary float-right">Submit</button>
-            </form>
+              <h2 className="py-2">Signup</h2>
+              <form className="form" action="/ideas" method="post" onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="name">Name</label>
+                  <input type="text" name="name" value={name} onChange={handleName} className="form-control" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input type="email" name="email" value={email} onChange={handleEmail} className="form-control" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input type="password" name="password" value={password} onChange={handlePassword} className="form-control" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password2">Confirm Password</label>
+                  <input type="password" name="password2" value={password2} onChange={handlePassword2} className="form-control" />
+                </div>
+                <button type="submit" className="btn btn-primary float-right">Submit</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-      </div>
     </div>
-    )
+  )
 }
 
 export default Signup;

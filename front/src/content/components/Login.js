@@ -6,8 +6,6 @@ import { Redirect } from 'react-router-dom'
 require('dotenv').config()
 
 const Login = (props) => {
-  console.log('💔')
-  console.log(props)
   let [email, setEmail] = useState('')
   let [password, setPassword] = useState('')
 
@@ -28,14 +26,9 @@ const Login = (props) => {
     axios.post(`${process.env.REACT_APP_API}/api/users/login`, userData)
       .then(res => {
         const { token } = res.data;
-        // Save to LocalStorage
         localStorage.setItem('jwtToken', token);
-        console.log(token, "this should be a token")
-        // Set token to Auth Header
         setAuthToken(token);
-        // Decode token to get user data
         const decoded = jwt_decode(token);
-        // Set current user
         props.nowCurrentUser(decoded);
       })
       .catch(err => console.log(err));
@@ -45,10 +38,9 @@ const Login = (props) => {
 
   return (
     <div className="signupSigninBackground">
-    <div id="login">
+      <div id="login">
         <div className="col-md-7 offset-md-3">
           <div className="card card-body">
-            {/* <h2 className="py-2">Login</h2> */}
             <form id="loginForm" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
@@ -63,9 +55,9 @@ const Login = (props) => {
           </div>
         </div>
       </div>
-      </div>
-      
-    )
+    </div>
+
+  )
 }
 
 export default Login;
