@@ -22,13 +22,13 @@ app.use(bodyParser.json())
 
 const uri = process.env.MONGODB_URI
 
-// const MongoClient = require('mongodb').MongoClient;
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
+const MongoClient = require('mongodb').MongoClient;
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
 
 mongoose.connect( uri).then((()=>console.log("Mongo is running on" ))).catch(err => console.log(err))
 
