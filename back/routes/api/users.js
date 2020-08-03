@@ -247,6 +247,22 @@ router.get("/friendRequests", passport.authenticate("jwt", { session: false }), 
     
 });
 
+router.get("/acceptedRequests", passport.authenticate("jwt", { session: false }), (req, res) => {
+
+    console.log("inside acceptedRequests route", req.user) 
+
+    User.findOne({'_id': req.user.id}, function(err, foundUser) {
+        if (err) {
+            console.log("We've got an error finding this user", err)
+        } else {
+            User.getAcceptedFriends(foundUser, function(err, friendships) {
+                console.log(friendships)
+                res.json(friendships)
+            })
+        }
+    })
+});
+
 // test route for specific user 
 router.get("/test/profile", function (req, res) {
     User.findOne({'_id': req.user._id})

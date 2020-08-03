@@ -5,6 +5,7 @@ const FriendsCarousel = (props) => {
     return (
         <div>
             <section className="mainboxouter">
+
                 <UserCard />
                 <UserCard />
                 <UserCard />

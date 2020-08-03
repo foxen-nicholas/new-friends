@@ -4,22 +4,26 @@ import FriendCard from './FriendCard'
 
 const Main = (props) => {
 
-    let [allFriendsArray, setAllFriendsArray] = useState([])
+    // let [allFriendsArray, setAllFriendsArray] = useState([])
+    // let handleClick = () => {
+        
+    //     Axios.post(`${process.env.REACT_APP_API}/api/users/friendRequests`, )
+    // }
 
-    useEffect( () => {
-        Axios.get(`${process.env.REACT_APP_API}/api/users`)
-        .then(allFriends => {
-            console.log('these are all the users', allFriends.data)
-            setAllFriendsArray(allFriends.data)
-        })
-        .catch(err => console.log(err))
-    }
-        , [])
+    // useEffect( () => {
+    //     Axios.get(`${process.env.REACT_APP_API}/api/users`)
+    //     .then(allFriends => {
+    //         console.log('these are all the users', allFriends.data)
+    //         setAllFriendsArray(allFriends.data)
+    //     })
+    //     .catch(err => console.log(err))
+    // }
+    // , [])
 
-    const mappedFriends = allFriendsArray.map((friend) => {
+    const mappedFriends = props.friends.map((friend) => {
         return (
             <div key={friend._id}>
-                <FriendCard friend={friend} user={props.user} />
+                <FriendCard friends={friend} user={props.user} />
             </div>)
     })
     return (

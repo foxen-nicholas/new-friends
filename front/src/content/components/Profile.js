@@ -14,16 +14,19 @@ const Profile = (props) => {
 
   useEffect(() => {
     let token = localStorage.getItem("jwtToken")
-    axios.get(`${process.env.REACT_APP_API}/api/users/profile`, { headers: { Authorization: `Bearer ${token}` } })
-      .then(response => {
-        setSmoke(response.data.smoke)
-        setAbout(response.data.about)
-        setLanguages(response.data.languages)
-        setDrink(response.data.drink)
-        setAge(response.data.age)
-        setLocation(response.data.location)
-        setCategory(response.data.category)
-      }).catch(err => console.log(err))
+    // console.log('this is the token ++++', token) 
+    axios.get(`${process.env.REACT_APP_API}/api/users/profile`, {headers: {Authorization: `Bearer ${token}`}})
+    .then ( response => {
+      console.log("here is the profile route data", response)
+      setSmoke(response.data.smoke)
+      setAbout(response.data.about)
+      setLanguages(response.data.languages)
+      setDrink(response.data.drink)
+      setAge(response.data.age)
+      setLocation(response.data.location)
+      setCategory(response.data.category)
+    }).catch(err => console.log(err))
+
   }, [])
 
   let userData = props.user

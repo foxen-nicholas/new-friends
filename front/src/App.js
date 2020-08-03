@@ -13,6 +13,7 @@ import Login from './content/components/Login'
 import Signup from './content/components/Signup'
 import Edit from './content/components/Edit'
 import 'bootstrap/dist/css/bootstrap.min.css' 
+import axios from 'axios'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const user = localStorage.getItem(`jwtToken`)
@@ -23,11 +24,21 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 }
 
 function App() {
+
   let [currentUser, setCurrentUser] = useState("")
   let [isAuthenticated, setIsAuthenticated] = useState(true)
+  let [allFriendsArray, setAllFriendsArray] = useState([])
 
   useEffect(() => {
     let token;
+
+    axios.get(`${process.env.REACT_APP_API}/api/users`)
+        .then(allFriends => {
+            console.log('these are all the users', allFriends.data)
+            setAllFriendsArray(allFriends.data)
+        })
+        .catch(err => console.log(err))
+
     if(localStorage.getItem('jwtToken') === null) {
       setIsAuthenticated(false)
     } else {
@@ -70,8 +81,8 @@ function App() {
       <div className="App">
         <Route exact path="/" component={Welcome} />
         <PrivateRoute path='/Profile' component={ Profile } user={currentUser} />
-        <Route path="/Main" render={() => <Main blog={data} user={currentUser} />} />  
-        <Route path="/Requests" render={() => <Request blog={data} user={currentUser} />} /> 
+        <Route path="/Main" render={() => <Main blog={data} user={currentUser} friends={allFriendsArray} />} />  
+        <Route path="/Requests" render={() => <Request blog={data} user={currentUser} friends={allFriendsArray} />} /> 
         <Route path="/Friends" render={() => <Friends user={currentUser} />} /> 
         <Route path='/Login' render={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} setIsAuthenticated={setIsAuthenticated} user={currentUser} /> } />
         <Route path="/Signup" component={Signup} /> 
